@@ -32,32 +32,38 @@ function TodoItem({ todo, setTodos }) {
 
   const handleBlurOrEnter = async (e) => {
     const isDeleting = e.relatedTarget?.id === `delete-${todo.id}`;
-
-    if (e.type === 'blur' && isDeleting) return; // Don't save if deleting
+  
+    if (e.type === 'blur' && isDeleting) return;
     if (e.type === 'blur' || e.key === 'Enter') {
       const trimmedText = editedText.trim();
-
+  
       if (!trimmedText) {
         setEditedText(todo.text);
         setIsEditing(false);
         return;
       }
-
+  
       try {
-        await updateTodoApi(todo.id, { text: editedText });
-
+        const hasTextChanged = trimmedText !== todo.text;
+        const newCompletedStatus = hasTextChanged ? false : todo.completed;
+  
+        const updatedTodo = { ...todo, text: trimmedText, completed: newCompletedStatus };
+  
+        await updateTodoApi(todo.id, updatedTodo);
+  
         setTodos((prevTodos) =>
           prevTodos.map((_todo) =>
-            _todo.id === todo.id ? { ..._todo, text: editedText } : _todo
+            _todo.id === todo.id ? updatedTodo : _todo
           )
         );
+  
         setIsEditing(false);
-        setHasEdited(false); // Reset the editing state after saving
       } catch (error) {
         console.error('Failed to update todo:', error);
       }
     }
   };
+  
 
   return (
     <li style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}>
