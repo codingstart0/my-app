@@ -1,31 +1,22 @@
-import React, { useState } from 'react';
-import { myHelper, myHelperInline } from '../utils/utils';
+import React, { useEffect, useState } from 'react';
 import { deleteTodoApi, updateTodoApi } from '../utils/api';
+import TodoEdit from './TodoEdit';
+import TodoDelete from './TodoDelete';
+import ToggleComplete from './ToggleComplete';
 
 function TodoItem({ todo, setTodos }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedText, setEditedText] = useState(todo.text);
-  const toggleComplete = async () => {
-    myHelper('toggleComplete');
-    myHelperInline('toggleComplete2');
-    // TODO PATCH request to update TODO
-    try {
-      await updateTodoApi(todo.id, { completed: !todo.completed });
+  const [hasEdited, setHasEdited] = useState(false);
 
-      setTodos((prevTodos) =>
-        prevTodos.map((_todo) =>
-          _todo.id === todo.id
-            ? { ..._todo, completed: !_todo.completed }
-            : _todo
-        )
-      );
-    } catch (error) {
-      console.error('Failed to update todo:', error);
+  useEffect(() => {
+    if (editedText !== todo.text) {
+      setHasEdited(true);
     }
-  };
+  }, [editedText, todo.text]);
 
   const deleteTodo = async () => {
-    setIsEditing(false); // Exit edit mode immediately
+    setIsEditing(false);
 
     try {
       await deleteTodoApi(todo.id);
@@ -40,13 +31,13 @@ function TodoItem({ todo, setTodos }) {
   };
 
   const handleBlurOrEnter = async (e) => {
-    if (e.type === 'blur' && e.relatedTarget?.id === `delete-${todo.id}`) {
-      // Prevent blur from triggering update when clicking delete
-      return;
-    }
+    const isDeleting = e.relatedTarget?.id === `delete-${todo.id}`;
 
+    if (e.type === 'blur' && isDeleting) return; // Don't save if deleting
     if (e.type === 'blur' || e.key === 'Enter') {
-      if (!editedText.trim()) {
+      const trimmedText = editedText.trim();
+
+      if (!trimmedText) {
         setEditedText(todo.text);
         setIsEditing(false);
         return;
@@ -61,6 +52,7 @@ function TodoItem({ todo, setTodos }) {
           )
         );
         setIsEditing(false);
+        setHasEdited(false); // Reset the editing state after saving
       } catch (error) {
         console.error('Failed to update todo:', error);
       }
@@ -68,21 +60,14 @@ function TodoItem({ todo, setTodos }) {
   };
 
   return (
-    <ul style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}>
-      <input
-        type='checkbox'
-        checked={todo.completed}
-        onChange={toggleComplete}
-      />
+    <li style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}>
+      <ToggleComplete todo={todo} setTodos={setTodos} hasEdited={hasEdited} />
 
       {isEditing ? (
-        <input
-          type='text'
-          value={editedText}
-          onChange={(e) => setEditedText(e.target.value)}
-          onBlur={handleBlurOrEnter}
-          onKeyDown={handleBlurOrEnter}
-          autoFocus
+        <TodoEdit
+          editedText={editedText}
+          setEditedText={setEditedText}
+          handleBlurOrEnter={handleBlurOrEnter}
         />
       ) : (
         <span onClick={startEditing} style={{ cursor: 'pointer' }}>
@@ -90,10 +75,8 @@ function TodoItem({ todo, setTodos }) {
         </span>
       )}
 
-      <button id={`delete-${todo.id}`} onClick={deleteTodo}>
-        Delete
-      </button>
-    </ul>
+      <TodoDelete deleteTodo={deleteTodo} todoId={todo.id} />
+    </li>
   );
 }
 

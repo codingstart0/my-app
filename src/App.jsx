@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import TodoList from "./components/TodoList";
 import TodoForm from "./components/TodoForm";
 import { loadTodos } from "./utils/api";
-import "./styles.css";
 import "./index.css";
 
 function App() {
