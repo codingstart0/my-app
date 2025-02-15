@@ -1,21 +1,24 @@
 import React, { useState } from "react";
+import { createTodoApi } from "../utils/api";
 
 function TodoForm({ setTodos }) {
   const [text, setText] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!text.trim()) return;
 
-    const newTodo = {
-      id: Date.now(), // Unique ID
-      text,
-      completed: false,
-    };
-    // TODO Post request to create new TODO
-    setTodos((prevTodos) => [...prevTodos, newTodo]);
-    setText(""); // Clear input
+    try {
+      const savedTodo = await createTodoApi({ text, completed: false });
+
+      // Update state with the newly created todo
+      setTodos((prevTodos) => [...prevTodos, savedTodo]);
+      setText(""); // Clear input
+    } catch (error) {
+      console.error("Error adding todo:", error);
+    }
   };
+
 
   return (
     <form onSubmit={handleSubmit}>

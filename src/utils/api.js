@@ -21,7 +21,7 @@ async function handleApiResponse(response) {
   }
 }
 
-async function fetchApi(apiBaseUrl, method, data, headers) {
+async function fetchApi(url, method, data, headers) {
   const _headers = {
     'Content-Type': 'application/json',
     ...headers,
@@ -36,8 +36,9 @@ async function fetchApi(apiBaseUrl, method, data, headers) {
     options.body = JSON.stringify(data);
   }
 
-  const response = await fetch(apiBaseUrl, options);
-  // const response = await fetch(endpoints.getTodos(), options);
+  const response = await fetch(url, options);
+  console.log("sitas:", url)
+
   return handleApiResponse(response);
 }
 
@@ -78,7 +79,3 @@ export {
   updateTodoApi,
   loadTodos,
 };
-
-const response = await fetch('http://localhost:3000/todos/');
-const jsonData = await response.json(); // Convert response to JSON
-console.log("JSON Response:", jsonData);
