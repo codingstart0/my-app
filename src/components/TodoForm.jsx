@@ -24,11 +24,11 @@ function TodoForm({ setTodos }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input
-        type='text'
+      <TextField
+        label="Add a todo..."
+        variant="outlined"
         value={text}
-        onChange={({ target }) => setText(target.value)}
-        placeholder='Add a todo...'
+        onChange={(e) => setText(e.target.value)}
       />
       <Button type='submit' variant='contained' color='primary'>
         Add
