@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Button from '@mui/material/Button';
-import TextField from "@mui/material/TextField";
+import TextField from '@mui/material/TextField';
 import { createTodoApi } from '../utils/api';
 
 function TodoForm({ setTodos }) {
@@ -25,12 +25,14 @@ function TodoForm({ setTodos }) {
   return (
     <form onSubmit={handleSubmit}>
       <TextField
-        label="Add a todo..."
-        variant="outlined"
+        label='Add a todo...'
+        variant='outlined'
+        size="small"
         value={text}
         onChange={(e) => setText(e.target.value)}
       />
-      <Button type='submit' variant='contained' color='primary'>
+      <Button type='submit' variant='contained'     size="normal"
+ color='primary'>
         Add
       </Button>
     </form>
