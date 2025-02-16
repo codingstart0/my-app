@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Button from '@mui/material/Button';
+import TextField from "@mui/material/TextField";
 import { createTodoApi } from '../utils/api';
 
 function TodoForm({ setTodos }) {
@@ -28,7 +30,9 @@ function TodoForm({ setTodos }) {
         onChange={({ target }) => setText(target.value)}
         placeholder='Add a todo...'
       />
-      <button type='submit'>Add</button>
+      <Button type='submit' variant='contained' color='primary'>
+        Add
+      </Button>
     </form>
   );
 }
