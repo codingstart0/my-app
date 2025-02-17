@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { updateTodoApi } from '../utils/api';
+import { Checkbox } from '@mui/material';
 
 function ToggleComplete({ todo, setTodos, hasEdited }) {
   const [isCompleted, setIsCompleted] = useState(todo.completed);
@@ -30,10 +31,11 @@ function ToggleComplete({ todo, setTodos, hasEdited }) {
   };
 
   return (
-    <input
-      type="checkbox"
+    <Checkbox
       checked={isCompleted}
       onChange={toggleComplete}
+      size='small'
+      color={isCompleted ? 'success' : 'primary'} // Green if completed, blue otherwise
     />
   );
 }
