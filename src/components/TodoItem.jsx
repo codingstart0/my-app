@@ -98,6 +98,8 @@ function TodoItem({ todo, setTodos }) {
             overflow: 'hidden',
             textOverflow: 'ellipsis', // Adds "..." if text is too long
             padding: '0 10px',
+            textDecoration: todo.completed ? 'line-through' : 'none', // ✅ Ensure strike-through effect
+            color: todo.completed ? 'gray' : 'inherit', // Optional: Dim completed tasks
           }}
         >
           {todo.text}
