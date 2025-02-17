@@ -3,7 +3,7 @@ import { deleteTodoApi, updateTodoApi } from '../utils/api';
 import TodoEdit from './TodoEdit';
 import TodoDelete from './TodoDelete';
 import ToggleComplete from './ToggleComplete';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 function TodoItem({ todo, setTodos }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -72,11 +72,11 @@ function TodoItem({ todo, setTodos }) {
       sx={{
         display: 'flex',
         alignItems: 'center',
-        padding: 1,
+        justifyContent: 'space-between',
+        padding: 0.5,
         marginBottom: 1,
         maxWidth: '400px', // Control the width here
         width: '100%',
-        textDecoration: todo.completed ? 'line-through' : 'none',
       }}
     >
       <ToggleComplete todo={todo} setTodos={setTodos} hasEdited={hasEdited} />
@@ -88,9 +88,20 @@ function TodoItem({ todo, setTodos }) {
           handleBlurOrEnter={handleBlurOrEnter}
         />
       ) : (
-        <span onClick={startEditing} style={{ cursor: 'pointer' }}>
+        <Typography
+          onClick={startEditing}
+          sx={{
+            cursor: 'pointer',
+            flexGrow: 1, // Makes sure the text takes up the middle space
+            textAlign: 'left',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis', // Adds "..." if text is too long
+            padding: '0 10px',
+          }}
+        >
           {todo.text}
-        </span>
+        </Typography>
       )}
 
       <TodoDelete deleteTodo={deleteTodo} todoId={todo.id} />
