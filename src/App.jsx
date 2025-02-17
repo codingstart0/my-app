@@ -31,7 +31,7 @@ function App() {
       }}
     >
       <Paper
-        elevation={3} // Adds shadow
+        elevation={10} // Adds shadow
         sx={{
           padding: 3,
           width: '90%',

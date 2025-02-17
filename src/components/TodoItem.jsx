@@ -73,10 +73,10 @@ function TodoItem({ todo, setTodos }) {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        padding: 0.5,
-        marginBottom: 1,
-        maxWidth: '400px', // Control the width here
+        padding: '0 0.5',
+        maxWidth: '24.5em', // Control the width here
         width: '100%',
+        minHeight: 40,
       }}
     >
       <ToggleComplete todo={todo} setTodos={setTodos} hasEdited={hasEdited} />
@@ -100,13 +100,16 @@ function TodoItem({ todo, setTodos }) {
             padding: '0 10px',
             textDecoration: todo.completed ? 'line-through' : 'none', // ✅ Ensure strike-through effect
             color: todo.completed ? 'gray' : 'inherit', // Optional: Dim completed tasks
+            minHeight: '24px',
           }}
         >
           {todo.text}
         </Typography>
       )}
 
-      <TodoDelete deleteTodo={deleteTodo} todoId={todo.id} />
+      <Box sx={{ marginLeft: '1' }}>
+        <TodoDelete deleteTodo={deleteTodo} todoId={todo.id} />
+      </Box>
     </Box>
   );
 }
