@@ -3,6 +3,7 @@ import { deleteTodoApi, updateTodoApi } from '../utils/api';
 import TodoEdit from './TodoEdit';
 import TodoDelete from './TodoDelete';
 import ToggleComplete from './ToggleComplete';
+import { Box } from '@mui/material';
 
 function TodoItem({ todo, setTodos }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -32,41 +33,52 @@ function TodoItem({ todo, setTodos }) {
 
   const handleBlurOrEnter = async (e) => {
     const isDeleting = e.relatedTarget?.id === `delete-${todo.id}`;
-  
+
     if (e.type === 'blur' && isDeleting) return;
     if (e.type === 'blur' || e.key === 'Enter') {
       const trimmedText = editedText.trim();
-  
+
       if (!trimmedText) {
         setEditedText(todo.text);
         setIsEditing(false);
         return;
       }
-  
+
       try {
         const hasTextChanged = trimmedText !== todo.text;
         const newCompletedStatus = hasTextChanged ? false : todo.completed;
-  
-        const updatedTodo = { ...todo, text: trimmedText, completed: newCompletedStatus };
-  
+
+        const updatedTodo = {
+          ...todo,
+          text: trimmedText,
+          completed: newCompletedStatus,
+        };
+
         await updateTodoApi(todo.id, updatedTodo);
-  
+
         setTodos((prevTodos) =>
-          prevTodos.map((_todo) =>
-            _todo.id === todo.id ? updatedTodo : _todo
-          )
+          prevTodos.map((_todo) => (_todo.id === todo.id ? updatedTodo : _todo))
         );
-  
+
         setIsEditing(false);
       } catch (error) {
         console.error('Failed to update todo:', error);
       }
     }
   };
-  
 
   return (
-    <li style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}>
+    <Box
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        padding: 1,
+        marginBottom: 1,
+        maxWidth: '400px', // Control the width here
+        width: '100%',
+        textDecoration: todo.completed ? 'line-through' : 'none',
+      }}
+    >
       <ToggleComplete todo={todo} setTodos={setTodos} hasEdited={hasEdited} />
 
       {isEditing ? (
@@ -82,7 +94,7 @@ function TodoItem({ todo, setTodos }) {
       )}
 
       <TodoDelete deleteTodo={deleteTodo} todoId={todo.id} />
-    </li>
+    </Box>
   );
 }
 
