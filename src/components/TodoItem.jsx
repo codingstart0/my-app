@@ -74,7 +74,7 @@ function TodoItem({ todo, setTodos }) {
         alignItems: 'center',
         justifyContent: 'space-between',
         padding: '0 0.5',
-        maxWidth: '24.5em', // Control the width here
+        maxWidth: '25em', // Control the width here
         width: '100%',
         minHeight: 40,
       }}

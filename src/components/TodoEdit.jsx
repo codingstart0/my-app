@@ -6,12 +6,18 @@ function TodoEdit({ editedText, setEditedText, handleBlurOrEnter }) {
     <TextField
     variant="outlined"
     size="small"
-    // fullWidth
     autoFocus
+    fullWidth
     value={editedText}
     onChange={(e) => setEditedText(e.target.value)}
     onBlur={handleBlurOrEnter}
     onKeyDown={handleBlurOrEnter}
+    sx={{
+      minWidth: "200px", // Ensures a minimum width
+      maxWidth: "100%", // Prevents it from being too large
+      width: "100%", // Adjusts automatically
+      marginRight: "6px",
+    }}
   />
   );
 }
