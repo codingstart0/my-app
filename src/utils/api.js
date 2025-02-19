@@ -1,4 +1,4 @@
-const apiBaseUrl = 'http://localhost:3000';
+const apiBaseUrl = 'http://localhost:8000';
 
 const endpoints = {
   getTodos: () => `${apiBaseUrl}/todos`,

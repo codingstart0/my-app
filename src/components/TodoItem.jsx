@@ -3,6 +3,7 @@ import { deleteTodoApi, updateTodoApi } from '../utils/api';
 import TodoEdit from './TodoEdit';
 import TodoDelete from './TodoDelete';
 import ToggleComplete from './ToggleComplete';
+import { Box, Typography } from '@mui/material';
 
 function TodoItem({ todo, setTodos }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -32,41 +33,52 @@ function TodoItem({ todo, setTodos }) {
 
   const handleBlurOrEnter = async (e) => {
     const isDeleting = e.relatedTarget?.id === `delete-${todo.id}`;
-  
+
     if (e.type === 'blur' && isDeleting) return;
     if (e.type === 'blur' || e.key === 'Enter') {
       const trimmedText = editedText.trim();
-  
+
       if (!trimmedText) {
         setEditedText(todo.text);
         setIsEditing(false);
         return;
       }
-  
+
       try {
         const hasTextChanged = trimmedText !== todo.text;
         const newCompletedStatus = hasTextChanged ? false : todo.completed;
-  
-        const updatedTodo = { ...todo, text: trimmedText, completed: newCompletedStatus };
-  
+
+        const updatedTodo = {
+          ...todo,
+          text: trimmedText,
+          completed: newCompletedStatus,
+        };
+
         await updateTodoApi(todo.id, updatedTodo);
-  
+
         setTodos((prevTodos) =>
-          prevTodos.map((_todo) =>
-            _todo.id === todo.id ? updatedTodo : _todo
-          )
+          prevTodos.map((_todo) => (_todo.id === todo.id ? updatedTodo : _todo))
         );
-  
+
         setIsEditing(false);
       } catch (error) {
         console.error('Failed to update todo:', error);
       }
     }
   };
-  
 
   return (
-    <li style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}>
+    <Box
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: '0 0.5',
+        maxWidth: '25em',
+        width: '100%',
+        minHeight: 40,
+      }}
+    >
       <ToggleComplete todo={todo} setTodos={setTodos} hasEdited={hasEdited} />
 
       {isEditing ? (
@@ -76,13 +88,29 @@ function TodoItem({ todo, setTodos }) {
           handleBlurOrEnter={handleBlurOrEnter}
         />
       ) : (
-        <span onClick={startEditing} style={{ cursor: 'pointer' }}>
+        <Typography
+          onClick={startEditing}
+          sx={{
+            cursor: 'pointer',
+            flexGrow: 1, 
+            textAlign: 'left',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis', // Adds "..." if text is too long
+            padding: '0 10px',
+            textDecoration: todo.completed ? 'line-through' : 'none', 
+            color: todo.completed ? 'gray' : 'inherit', 
+            minHeight: '24px',
+          }}
+        >
           {todo.text}
-        </span>
+        </Typography>
       )}
 
-      <TodoDelete deleteTodo={deleteTodo} todoId={todo.id} />
-    </li>
+      <Box sx={{ marginLeft: '1' }}>
+        <TodoDelete deleteTodo={deleteTodo} todoId={todo.id} />
+      </Box>
+    </Box>
   );
 }
 
