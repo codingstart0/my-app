@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { deleteTodoApi, updateTodoApi } from '../utils/api';
 import TodoEdit from './TodoEdit';
 import TodoDelete from './TodoDelete';
@@ -8,14 +8,9 @@ import { Box, Typography } from '@mui/material';
 function TodoItem({ todo, setTodos }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedText, setEditedText] = useState(todo.text);
-  const [hasEdited, setHasEdited] = useState(false);
+  const deleteButtonRef = useRef(null); // useRef to reference the delete button
 
-  useEffect(() => {
-    if (editedText !== todo.text) {
-      setHasEdited(true);
-    }
-  }, [editedText, todo.text]);
-
+  // Move the deleteTodo function and others to the top
   const deleteTodo = async () => {
     setIsEditing(false);
 
@@ -32,12 +27,12 @@ function TodoItem({ todo, setTodos }) {
   };
 
   const handleBlurOrEnter = async (e) => {
-    const isDeleting = e.relatedTarget?.id === `delete-${todo.id}`;
+    const isDeleting = deleteButtonRef.current && deleteButtonRef.current.contains(e.relatedTarget);
 
     if (e.type === 'blur' && isDeleting) return;
+
     if (e.type === 'blur' || e.key === 'Enter') {
       const trimmedText = editedText.trim();
-
       if (!trimmedText) {
         setEditedText(todo.text);
         setIsEditing(false);
@@ -68,18 +63,8 @@ function TodoItem({ todo, setTodos }) {
   };
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: '0 0.5',
-        maxWidth: '25em',
-        width: '100%',
-        minHeight: 40,
-      }}
-    >
-      <ToggleComplete todo={todo} setTodos={setTodos} hasEdited={hasEdited} />
+    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <ToggleComplete todo={todo} setTodos={setTodos} />
 
       {isEditing ? (
         <TodoEdit
@@ -92,15 +77,14 @@ function TodoItem({ todo, setTodos }) {
           onClick={startEditing}
           sx={{
             cursor: 'pointer',
-            flexGrow: 1, 
+            flexGrow: 1,
             textAlign: 'left',
             whiteSpace: 'nowrap',
             overflow: 'hidden',
-            textOverflow: 'ellipsis', // Adds "..." if text is too long
+            textOverflow: 'ellipsis',
             padding: '0 10px',
-            textDecoration: todo.completed ? 'line-through' : 'none', 
-            color: todo.completed ? 'gray' : 'inherit', 
-            minHeight: '24px',
+            textDecoration: todo.completed ? 'line-through' : 'none',
+            color: todo.completed ? 'gray' : 'inherit',
           }}
         >
           {todo.text}
@@ -108,7 +92,7 @@ function TodoItem({ todo, setTodos }) {
       )}
 
       <Box sx={{ marginLeft: '1' }}>
-        <TodoDelete deleteTodo={deleteTodo} todoId={todo.id} />
+        <TodoDelete deleteTodo={deleteTodo} todoId={todo.id} ref={deleteButtonRef} />
       </Box>
     </Box>
   );
