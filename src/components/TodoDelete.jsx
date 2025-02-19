@@ -10,12 +10,10 @@ function TodoDelete({ deleteTodo, todoId }) {
       color='error'
       size='small'
       sx={{
-        // marginLeft: 0,
-        // marginRight: 0,
         padding: 0.3,
         fontWeight: 'bold',
         '&:hover': {
-          backgroundColor: 'error.dark', // Darken the button on hover
+          backgroundColor: 'error.dark',
         },
       }}
     >

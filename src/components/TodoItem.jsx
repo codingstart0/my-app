@@ -74,7 +74,7 @@ function TodoItem({ todo, setTodos }) {
         alignItems: 'center',
         justifyContent: 'space-between',
         padding: '0 0.5',
-        maxWidth: '25em', // Control the width here
+        maxWidth: '25em',
         width: '100%',
         minHeight: 40,
       }}
@@ -92,14 +92,14 @@ function TodoItem({ todo, setTodos }) {
           onClick={startEditing}
           sx={{
             cursor: 'pointer',
-            flexGrow: 1, // Makes sure the text takes up the middle space
+            flexGrow: 1, 
             textAlign: 'left',
             whiteSpace: 'nowrap',
             overflow: 'hidden',
             textOverflow: 'ellipsis', // Adds "..." if text is too long
             padding: '0 10px',
-            textDecoration: todo.completed ? 'line-through' : 'none', // ✅ Ensure strike-through effect
-            color: todo.completed ? 'gray' : 'inherit', // Optional: Dim completed tasks
+            textDecoration: todo.completed ? 'line-through' : 'none', 
+            color: todo.completed ? 'gray' : 'inherit', 
             minHeight: '24px',
           }}
         >

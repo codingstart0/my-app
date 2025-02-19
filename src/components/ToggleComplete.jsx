@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { updateTodoApi } from '../utils/api';
-import { Checkbox, IconButton } from '@mui/material';
-import { CheckCircle, RadioButtonUnchecked } from '@mui/icons-material';
+import { IconButton } from '@mui/material';
 import PlaylistAddCheckTwoToneIcon from '@mui/icons-material/PlaylistAddCheckTwoTone';
 
 function ToggleComplete({ todo, setTodos, hasEdited }) {
@@ -35,7 +34,7 @@ function ToggleComplete({ todo, setTodos, hasEdited }) {
   return (
     <IconButton onClick={toggleComplete} size='small'>
       <PlaylistAddCheckTwoToneIcon
-        color={isCompleted ? 'success' : 'secondary'} // Green if completed, blue otherwise
+        color={isCompleted ? 'success' : 'secondary'}
       />
     </IconButton>
   );

@@ -13,9 +13,9 @@ function TodoEdit({ editedText, setEditedText, handleBlurOrEnter }) {
     onBlur={handleBlurOrEnter}
     onKeyDown={handleBlurOrEnter}
     sx={{
-      minWidth: "200px", // Ensures a minimum width
-      maxWidth: "100%", // Prevents it from being too large
-      width: "100%", // Adjusts automatically
+      minWidth: "200px",
+      maxWidth: "100%",
+      width: "100%",
       marginRight: "6px",
     }}
   />

@@ -27,15 +27,15 @@ function App() {
         justifyContent: 'center',
         alignItems: 'center',
         minHeight: '100vh',
-        backgroundColor: '#f4f4f4', // Light background for contrast
+        backgroundColor: '#f4f4f4',
       }}
     >
       <Paper
-        elevation={10} // Adds shadow
+        elevation={10}
         sx={{
           padding: 3,
           width: '90%',
-          maxWidth: 400, // Prevents stretching on large screens
+          maxWidth: 400,
           textAlign: 'center',
         }}
       >
