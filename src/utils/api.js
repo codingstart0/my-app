@@ -37,7 +37,6 @@ async function fetchApi(url, method, data, headers) {
   }
 
   const response = await fetch(url, options);
-  console.log("sitas:", url)
 
   return handleApiResponse(response);
 }
