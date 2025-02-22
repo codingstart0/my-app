@@ -1,7 +1,7 @@
 import { Button } from '@mui/material';
 import React from 'react';
 
-function TodoDelete({ deleteTodo, todoId }) {
+function TodoDelete({ deleteTodo }) {
   return (
     <Button
       onClick={deleteTodo}
