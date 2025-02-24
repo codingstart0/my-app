@@ -1,4 +1,4 @@
-const apiBaseUrl = 'http://localhost:8000';
+const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
 const endpoints = {
   getTodos: () => `${apiBaseUrl}/todos`,
