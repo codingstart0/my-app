@@ -1,3 +1,56 @@
+# Todo list
+
+1.  Susiziurek kodo formatavima (reiktu code linting pasisetupint, kad ale nepraleistu netvarkingo kodo)
+2.  Pasimokinti per theming tokius visokius kaip spalvas:
+
+    - https://mui.com/material-ui/customization/theming/
+
+3.  `<h2>Todo App</h2>` panaudot typography:
+
+    - https://mui.com/material-ui/customization/typography/
+
+    beje ar h1 kur nors yra, ar prasideda nuo h2? tada ner gerai.
+
+4.  Visokiem margin/padding geriau prie px nesiristi, jie turi savo scale ir realiatyvius dydzius pvz.: `marginRight: 6px`
+
+    - https://mui.com/system/getting-started/the-sx-prop/
+    - https://mui.com/material-ui/customization/spacing/
+
+    Gerai isiskaityk viska cia:
+
+    - https://mui.com/material-ui/customization/how-to-customize/
+    - https://mui.com/material-ui/customization/theme-components/
+    - https://mui.com/material-ui/customization/theming/
+    - https://mui.com/material-ui/customization/palette/
+
+    Nes ta sx jie padare tokiam one-off vienkartiniam, neperpanaudojam dalykui
+
+5.  Kad nereiktu prop drill'int, pasikurti TodosContext, kas pakeis kad situ nereiks visur persiuntinet -
+
+    ```
+    <TodoForm setTodos={setTodos} />
+    <TodoList todos={todos} setTodos={setTodos} />
+    ```
+
+    - https://react.dev/reference/react/createContext
+
+6.  Pasidaryk reusable Modal, kur tuose try catch error galetum juos parodyt vietoj console.error.
+    Manau galima irgi dar vieno context reikes, nes reikes state keitaliot kada show kada ne, koks title, message, bet cia jau sito modal context nieko bendro su todos context
+
+    - https://mui.com/material-ui/react-modal/#basic-modal
+
+7.  Vietoj pavieniu ir tiesioginiu fetch, pasijunk ReactQuery (ziuriu dabar dar vadina TanStack Query):
+
+    - https://tanstack.com/query/latest (tik kad man pagriuves ju website dabar..)
+    - https://refine.dev/blog/react-query-guide
+
+      Mutation - jie vadina viska kas keicias - update/add/delete
+
+    12:17
+    react query'iui - tolygus (biski maziau populiarus, bet ir placiai naudojmas) - SWR https://swr.vercel.app/
+    12:17
+    pasiziurek kuris labiau makes sense ta ir pasirink
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
